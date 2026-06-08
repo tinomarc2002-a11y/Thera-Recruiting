@@ -181,6 +181,7 @@ section{ position:relative; }
    HERO
    ================================================================= */
 .hero{ position:relative; min-height:100svh; display:flex; align-items:center; padding:120px 0 80px; overflow:hidden; }
+@media (max-width:900px){ .hero{ align-items:flex-start; padding-top:104px; } }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
 .hero-bg video{ width:100%; height:100%; object-fit:cover; opacity:.28; }
 .hero-bg::after{ /* readability + vignette */
@@ -494,11 +495,12 @@ section{ position:relative; }
   background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
   animation:shimmer 3.2s linear infinite; }
 @keyframes shimmer{ to{ background-position:-220% 0; } }
-.hero-tagline{ display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:500;
-  font-size:clamp(1.1rem,2.2vw,1.55rem); color:var(--fg); margin-bottom:30px;
+.hero-tagline{ font-family:var(--font-display); font-weight:500;
+  font-size:clamp(1.1rem,2.4vw,1.5rem); line-height:1.45; color:var(--fg); margin-bottom:30px;
   opacity:0; transform:translateY(20px); animation:wordIn .8s var(--ease) .55s forwards; }
-.hero-tagline .accent{ color:var(--accent); }
-.hero-tagline .tg-arrow{ width:34px; height:34px; border-radius:9px; display:grid; place-items:center; flex-shrink:0;
+.hero-tagline .accent{ color:var(--accent); white-space:nowrap; }
+.hero-tagline .tg-arrow{ display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:30px; border-radius:8px; vertical-align:-9px; margin-right:10px;
   background:rgba(198,255,58,.1); border:1px solid rgba(198,255,58,.3); color:var(--accent); }
 .hero-tagline .tg-arrow svg{ animation:arrowFloat 2.4s var(--ease) infinite; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
@@ -625,10 +627,6 @@ section{ position:relative; }
   <canvas class="constellation" id="constellation" aria-hidden="true"></canvas>
 
   <div class="container hero-inner">
-    <div class="badge-status reveal in" data-cursor>
-      <span class="pulse"></span> Nur 3 neue Partner pro Quartal · Q3/2026 fast vergeben
-    </div>
-
     <!-- CONVERSION-CRITICAL: Hero-Headline (Wort-für-Wort-Reveal) -->
     <h1 class="h-hero hero-title">
       <span class="word" style="animation-delay:.10s">Neukunden</span>
