@@ -1279,10 +1279,29 @@ section{ position:relative; }
     var submitBtn = document.getElementById('qSubmit');
     submitBtn.disabled = true; submitBtn.innerHTML = 'Wird gesendet…';
 
-    /* TODO[BACKEND]: Hier echte Übermittlung anbinden
-       (z.B. fetch POST an dein CRM / E-Mail-Tool / Make/Zapier-Webhook).
-       Payload-Beispiel: { answers: state.answers, contact: state.contact } */
-    window.setTimeout(showSuccess, 700); // Demo: simulierter Versand
+    // Echter Versand an Formspree
+    var c = state.contact, a = state.answers;
+    var payload = {
+      Name: c.name, Firma: c.firma, email: c.email, Telefon: c.telefon,
+      Branche: a.branche || '', Kundenwert: a.kundenwert || '',
+      Akquise: a.akquise || '', Zeitrahmen: a.timing || '',
+      _subject: 'Neue Analysegespräch-Anfrage – ' + (c.name || '')
+    };
+    fetch('https://formspree.io/f/xvznajve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(r.ok){ showSuccess(); return; }
+      return r.json().then(function(d){
+        throw new Error((d && d.errors && d.errors[0] && d.errors[0].message) || 'Senden fehlgeschlagen');
+      });
+    }).catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Erneut senden';
+      var trust = document.querySelector('.quiz-trust');
+      if(trust){ trust.innerHTML = '<span style="color:#ff6b6b">Senden fehlgeschlagen – bitte erneut versuchen oder schreib direkt an info@mr-elevate.de.</span>'; }
+    });
   }
 
   function showSuccess(){
