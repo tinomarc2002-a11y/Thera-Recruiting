@@ -537,6 +537,30 @@ section{ position:relative; }
 @media (max-width:760px){ .constellation{ opacity:.35; } }
 
 /* =================================================================
+   QUIZ MODAL (Popup)
+   ================================================================= */
+.quiz-modal{ position:fixed; inset:0; z-index:500; display:grid; place-items:center; padding:18px; }
+.quiz-modal[hidden]{ display:none; }
+.quiz-modal-backdrop{ position:absolute; inset:0; background:rgba(4,5,6,.82); backdrop-filter:blur(6px); animation:mFade .3s var(--ease); }
+@keyframes mFade{ from{ opacity:0; } to{ opacity:1; } }
+.quiz-modal-dialog{ position:relative; z-index:1; width:100%; max-width:680px; max-height:92svh; overflow-y:auto; overscroll-behavior:contain;
+  background:linear-gradient(180deg,var(--bg-elev),#0c0e10); border:1px solid var(--line-strong); border-radius:20px;
+  padding:clamp(22px,4vw,40px); box-shadow:0 40px 100px -30px rgba(0,0,0,.9); animation:modalIn .4s var(--ease); }
+.quiz-modal-dialog::before{ content:""; position:absolute; inset:0 0 auto 0; height:1px; border-radius:20px 20px 0 0;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:.6; }
+.quiz-modal-close{ position:absolute; top:14px; right:14px; width:40px; height:40px; border-radius:50%; border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.04); color:var(--fg); display:grid; place-items:center; z-index:2; transition:background var(--t-fast); }
+.quiz-modal-close:hover{ background:rgba(255,255,255,.1); }
+.quiz-modal-head{ text-align:center; margin-bottom:26px; padding-inline:8px; }
+.quiz-modal-title{ font-family:var(--font-display); font-weight:600; font-size:clamp(1.3rem,3vw,1.7rem); line-height:1.15; margin-bottom:10px; }
+.quiz-modal-head p{ color:var(--fg-muted); font-size:.95rem; }
+/* Quiz-Card im Modal ohne Doppel-Rahmen (Dialog liefert ihn) */
+.quiz-modal .quiz-card{ border:none; background:none; padding:0; box-shadow:none; }
+.quiz-modal .quiz-card::before{ display:none; }
+@keyframes modalIn{ from{ opacity:0; transform:translateY(22px) scale(.98); } to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){ .quiz-modal-backdrop,.quiz-modal-dialog{ animation:none; } }
+
+/* =================================================================
    COOKIE CONSENT (DSGVO/TTDSG – Opt-in, gleichwertige Buttons)
    ================================================================= */
 .cc{ position:fixed; left:16px; right:16px; bottom:16px; z-index:400; max-width:580px; margin-inline:auto;
@@ -666,32 +690,8 @@ section{ position:relative; }
   </div>
 </header>
 
-<!-- ============================================================= -->
-<!-- QUIZ FUNNEL                                                    -->
-<!-- ============================================================= -->
-<section class="quiz-section sec-pad" id="quiz">
-  <div class="container">
-    <div class="sec-head center reveal">
-      <span class="eyebrow">Analysegespräch</span>
-      <h2 class="h-sec">In 60 Sekunden zu deinem kostenlosen Analysegespräch</h2>
-      <p class="lead" style="margin-inline:auto;">Beantworte ein paar kurze Fragen. Wir prüfen, ob planbare, erfolgsbasierte Neukundengewinnung für dein Geschäft Sinn ergibt – und melden uns nur, wenn es passt.</p>
-    </div>
-
-    <div class="quiz-wrap reveal d1">
-      <div class="quiz-card">
-        <div class="quiz-top">
-          <span class="quiz-step-label">Schritt <b id="qCur">1</b> / <span id="qTotal">5</span></span>
-          <button class="quiz-back" id="qBack" hidden>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-            Zurück
-          </button>
-        </div>
-        <div class="progress"><div class="progress-bar" id="qProgress"></div></div>
-        <div id="quizBody" aria-live="polite"></div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Quiz-Funnel ist jetzt ein Popup/Modal (siehe Ende des <body>),
+     öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
 
 <!-- ============================================================= -->
 <!-- PROBLEM                                                        -->
@@ -935,6 +935,35 @@ section{ position:relative; }
     </div>
   </div>
 </footer>
+
+<!-- ============================================================= -->
+<!-- QUIZ FUNNEL — POPUP / MODAL                                    -->
+<!-- Öffnet sich bei Klick auf einen [data-quiz-cta]-Button          -->
+<!-- ============================================================= -->
+<div class="quiz-modal" id="quizModal" hidden>
+  <div class="quiz-modal-backdrop" data-quiz-close></div>
+  <div class="quiz-modal-dialog" role="dialog" aria-modal="true" aria-label="Kostenloses Analysegespräch">
+    <button class="quiz-modal-close" id="quizClose" type="button" aria-label="Schließen" data-quiz-close>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="quiz-modal-head">
+      <span class="eyebrow" style="margin-bottom:12px;">Analysegespräch</span>
+      <h2 class="quiz-modal-title">In 60 Sekunden zu deinem kostenlosen Analysegespräch</h2>
+      <p>Beantworte ein paar kurze Fragen – wir melden uns nur, wenn es passt.</p>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-top">
+        <span class="quiz-step-label">Schritt <b id="qCur">1</b> / <span id="qTotal">5</span></span>
+        <button class="quiz-back" id="qBack" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Zurück
+        </button>
+      </div>
+      <div class="progress"><div class="progress-bar" id="qProgress"></div></div>
+      <div id="quizBody" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ============================================================= -->
 <!-- COOKIE CONSENT BANNER                                          -->
@@ -1321,7 +1350,7 @@ section{ position:relative; }
         '<div class="summary-pill">'+
           pill(a.branche)+pill(a.kundenwert)+pill(a.timing)+
         '</div>'+
-        '<a href="#system" class="btn btn-ghost">Solange unser System ansehen</a>'+
+        '<a href="#system" class="btn btn-ghost" data-quiz-close>Solange unser System ansehen</a>'+
       '</div>';
   }
 
@@ -1340,7 +1369,28 @@ section{ position:relative; }
 
   render();
 
-  /* smooth-scroll helper for quiz CTAs already handled by CSS scroll-behavior + anchors */
+  /* ---------- Quiz popup/modal ---------- */
+  var quizModal = document.getElementById('quizModal');
+  function openQuizModal(){
+    if(!quizModal) return;
+    quizModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var f = quizModal.querySelector('.quiz-opt, input, button');
+    if(f && f.focus){ try{ f.focus(); }catch(e){} }
+  }
+  function closeQuizModal(){
+    if(!quizModal) return;
+    quizModal.hidden = true;
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('click', function(e){
+    var opener = e.target.closest('[data-quiz-cta]');
+    if(opener){ e.preventDefault(); openQuizModal(); return; }
+    if(e.target.closest('[data-quiz-close]')){ closeQuizModal(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && quizModal && !quizModal.hidden){ closeQuizModal(); }
+  });
 })();
 </script>
 </body>
