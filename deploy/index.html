@@ -212,7 +212,7 @@ section{ position:relative; }
 .pulse{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 var(--accent-glow); animation:pulse 2s infinite; }
 @keyframes pulse{ 0%{box-shadow:0 0 0 0 var(--accent-glow);} 70%{box-shadow:0 0 0 9px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
 
-.scroll-cue{ position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--fg-dim); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; }
+.scroll-cue{ display:inline-flex; flex-direction:row; align-items:center; gap:12px; margin-top:38px; z-index:2; color:var(--fg-dim); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; }
 .scroll-cue .mouse{ width:22px; height:36px; border:1.5px solid var(--line-strong); border-radius:12px; position:relative; }
 .scroll-cue .mouse::after{ content:""; position:absolute; top:7px; left:50%; transform:translateX(-50%); width:3px; height:7px; border-radius:2px; background:var(--accent); animation:scrolldot 1.8s infinite; }
 @keyframes scrolldot{ 0%{opacity:0; transform:translate(-50%,0);} 40%{opacity:1;} 80%{opacity:0; transform:translate(-50%,10px);} }
@@ -663,9 +663,9 @@ section{ position:relative; }
       <a href="#system" class="btn btn-ghost" data-cursor>So funktioniert's</a>
       <span class="note">⏱ 60 Sekunden · unverbindlich · kein Verkaufsgespräch</span>
     </div>
-  </div>
 
-  <div class="scroll-cue"><span class="mouse"></span> Scrollen</div>
+    <div class="scroll-cue reveal in d3"><span class="mouse"></span> Scrollen</div>
+  </div>
 </header>
 
 <!-- ============================================================= -->
