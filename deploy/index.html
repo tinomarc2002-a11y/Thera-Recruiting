@@ -23,8 +23,8 @@
   --bg:            #08090a;
   --bg-elev:       #0e0f11;
   --bg-card:       #111315;
-  --line:          #1d2024;
-  --line-strong:   #2a2e33;
+  --line:          #2e333c;   /* klar sichtbare Border */
+  --line-strong:   #444b56;   /* betonte Border (Karten, Inputs, Buttons) */
   --fg:            #f4f6f7;
   --fg-muted:      #9aa1a8;
   --fg-dim:        #646a70;
@@ -52,7 +52,8 @@
    RESET / BASE
    ================================================================= */
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; overflow-x:hidden; }
+html,body{ width:100%; max-width:100%; }
 @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
 
 body{
@@ -179,7 +180,7 @@ section{ position:relative; }
 /* =================================================================
    HERO
    ================================================================= */
-.hero{ min-height:100svh; display:flex; align-items:center; padding:120px 0 80px; overflow:hidden; }
+.hero{ position:relative; min-height:100svh; display:flex; align-items:center; padding:120px 0 80px; overflow:hidden; }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
 .hero-bg video{ width:100%; height:100%; object-fit:cover; opacity:.28; }
 .hero-bg::after{ /* readability + vignette */
@@ -503,7 +504,7 @@ section{ position:relative; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
 
 /* Constellation canvas */
-.constellation{ position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.55; }
+.constellation{ position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:.55; }
 
 /* Reveal variants */
 .reveal.blur{ filter:blur(14px); }
