@@ -1,0 +1,11 @@
+# Lokale Vorschau-Konfig
+.claude/
+
+# Original-/Zwischendateien (nicht fürs Web nötig)
+Mr Neu.png
+ChatGPT Image*.png
+logo_full.png
+
+# System
+Thumbs.db
+.DS_Store
