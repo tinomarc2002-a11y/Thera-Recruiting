@@ -12,3 +12,9 @@ Thumbs.db
 
 # Build-Artefakt (ZIP für manuellen Upload)
 deploy.zip
+
+# Bild-Original (Web-Version: hero-dresden.jpg)
+Hero Dresden.avif
+
+# Fremder Ordner, nicht Teil der Seite
+ads/

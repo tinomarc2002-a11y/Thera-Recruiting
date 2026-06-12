@@ -183,20 +183,21 @@ section{ position:relative; }
 .hero{ position:relative; min-height:100svh; display:flex; align-items:center; padding:120px 0 40px; overflow:hidden; }
 @media (max-width:900px){ .hero{ align-items:flex-start; padding-top:104px; } }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-bg video{ width:100%; height:100%; object-fit:cover; opacity:.28; }
-.hero-bg::after{ /* readability + vignette */
+.hero-bg video,.hero-photo{ width:100%; height:100%; object-fit:cover; }
+.hero-photo{ object-position:50% 42%; }
+.hero-bg::after{ /* dunkler Verlauf für Lesbarkeit (links stark, rechts mehr Foto) */
   content:""; position:absolute; inset:0;
   background:
-    radial-gradient(120% 80% at 70% 0%, transparent 40%, var(--bg) 100%),
-    linear-gradient(180deg, rgba(8,9,10,.55) 0%, rgba(8,9,10,.75) 60%, var(--bg) 100%);
+    linear-gradient(90deg, rgba(8,9,10,.92) 0%, rgba(8,9,10,.74) 42%, rgba(8,9,10,.46) 72%, rgba(8,9,10,.34) 100%),
+    linear-gradient(180deg, rgba(8,9,10,.45) 0%, rgba(8,9,10,.22) 38%, rgba(8,9,10,.5) 78%, var(--bg) 100%);
 }
-.hero-fallback{ /* shown if no video */
-  position:absolute; inset:0;
-  background:
-    radial-gradient(60% 50% at 20% 10%, rgba(124,92,255,.18), transparent 70%),
-    radial-gradient(50% 50% at 85% 30%, rgba(198,255,58,.12), transparent 70%);
+@media (max-width:900px){
+  .hero-bg::after{ background:
+    linear-gradient(180deg, rgba(8,9,10,.72) 0%, rgba(8,9,10,.55) 42%, rgba(8,9,10,.62) 74%, var(--bg) 100%); }
+  .hero-photo{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
+.hero-title,.hero-tagline,.hero-sub,.hero-bullets li{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
 .hero h1{ margin-bottom:26px; }
 .hero h1 .accent{ color:var(--accent); position:relative; white-space:nowrap; }
 .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:var(--fg-muted); max-width:60ch; margin-bottom:34px; }
@@ -507,7 +508,7 @@ section{ position:relative; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
 
 /* Constellation canvas */
-.constellation{ position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:.55; }
+.constellation{ position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:.32; }
 
 /* Reveal variants */
 .reveal.blur{ filter:blur(14px); }
@@ -637,15 +638,8 @@ section{ position:relative; }
 <!-- ============================================================= -->
 <header class="hero" id="hero">
   <div class="hero-bg" data-parallax>
-    <!-- Aurora: animierter Gradient-Backdrop (21st.dev-inspiriert) -->
-    <div class="aurora" aria-hidden="true"><b class="a1"></b><b class="a2"></b><b class="a3"></b></div>
-    <div class="hero-fallback"></div>
-    <!-- TODO[VIDEO]: VIDEO_PLACEHOLDER_HERO.mp4 austauschen. Empfehlung: stummes,
-         dunkles Loop-Video (z.B. abstrakte Datenvisualisierung / Studio-Aufnahme).
-         Datei muss <body> nicht blockieren -> preload="metadata". -->
-    <video autoplay muted loop playsinline preload="none" poster="">
-      <source src="VIDEO_PLACEHOLDER_HERO.mp4" type="video/mp4" />
-    </video>
+    <!-- Dresden-Skyline als Hero-Hintergrund -->
+    <img class="hero-photo" src="hero-dresden.jpg" alt="Dresdner Altstadt-Silhouette mit Frauenkirche an der Elbe bei Sonnenuntergang" width="1440" height="804" />
   </div>
 
   <!-- Animiertes Konstellations-Netz (Canvas) -->
