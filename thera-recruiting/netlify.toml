@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[redirects]]
+  from = "/arbeitgeber-check"
+  to = "/arbeitgebercheck.html"
+  status = 301
+
+[[redirects]]
+  from = "/leitfaden"
+  to = "/index.html#leitfaden"
+  status = 301

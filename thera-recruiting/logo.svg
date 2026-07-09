@@ -1,0 +1,49 @@
+<!--
+  Thera-Recruiting Wordmark — handgezeichneter Nachbau des Original-Logos
+  (Welle/Sprung-Icon + Punkte-Trail + Schriftzug), in den Marken­farben.
+  Kein pixelgenauer Export der Originaldatei — bei Erhalt der echten
+  Bilddatei bitte durch logo.png ersetzen.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="190" viewBox="0 0 620 190" role="img" aria-label="Thera Recruiting">
+  <!-- Punkte-Trail (klein -> groß), schwingt über die Welle -->
+  <g fill="#F5A623">
+    <circle cx="18"  cy="108" r="2.6"/>
+    <circle cx="26"  cy="94"  r="3.1"/>
+    <circle cx="36"  cy="81"  r="3.6"/>
+    <circle cx="48"  cy="69"  r="4.1"/>
+    <circle cx="62"  cy="59"  r="4.6"/>
+    <circle cx="78"  cy="51"  r="5.1"/>
+    <circle cx="96"  cy="45"  r="5.6"/>
+    <circle cx="116" cy="41"  r="6.1"/>
+  </g>
+  <circle cx="40" cy="55" r="13" fill="#F5A623"/>
+
+  <!-- Welle, äußere Bahn (dunkles Blau) -->
+  <path d="M4,150
+           C10,118 26,88 56,70
+           C90,50 128,44 158,58
+           C150,60 140,60 128,58
+           C96,52 66,60 44,82
+           C28,98 18,120 16,142
+           C15,148 10,152 4,150 Z"
+        fill="#1B5B8B"/>
+
+  <!-- Welle, innere Bahn (helles Blau) -->
+  <path d="M14,150
+           C22,122 38,96 66,80
+           C92,66 120,62 144,70
+           C122,68 100,74 82,90
+           C64,104 52,124 48,146
+           C47,151 40,153 14,150 Z"
+        fill="#2C7BB6"/>
+
+  <!-- Dünne orange Unterschwingung -->
+  <path d="M6,152 C36,168 96,176 156,164"
+        fill="none" stroke="#F5A623" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Wortmarke -->
+  <text x="196" y="98" font-family="'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="60" font-weight="700" letter-spacing="-0.5" fill="#1B5B8B">Thera</text>
+  <text x="228" y="152" font-family="'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="42" font-weight="700" letter-spacing="-0.3" fill="#F5A623">Recruiting</text>
+</svg>
