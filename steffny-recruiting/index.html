@@ -216,6 +216,25 @@ main{ flex:1; }
 /* ============================================================
    Startseite: Was dich erwartet
    ============================================================ */
+/* Echte Praxisfotos. Die Quellen sind hochkant, deshalb schneidet
+   object-fit sie auf ein ruhiges Querformat zu. */
+.shot{
+  display:block; width:100%; border-radius:16px;
+  object-fit:cover; background:var(--page);
+  /* height:auto ist Pflicht: sonst gewinnt das height-Attribut aus dem
+     HTML und der Zuschnitt über aspect-ratio greift nicht. */
+  height:auto;
+}
+.shot-hero{
+  aspect-ratio:16/10; object-position:center 46%;
+  margin:0 0 clamp(16px,3vw,22px);
+}
+.shot-wide{
+  aspect-ratio:3/2; object-position:center 32%;
+  margin:clamp(18px,3.5vw,26px) 0 0;
+}
+.caption{ font-size:12.5px; color:var(--muted); text-align:center; margin:9px 0 0; }
+
 .sec-title{
   font-size:13px; font-weight:600; color:var(--green);
   letter-spacing:.12em; text-transform:uppercase; text-align:center;
@@ -347,13 +366,18 @@ footer a:hover{ color:var(--green); text-decoration:underline; }
     <!-- ============ START: WARUM WIR ============ -->
     <section class="screen is-on" id="s-intro">
       <div class="panel">
-        <div id="introArt"></div>
+        <img class="shot shot-hero" src="team.jpg" width="1086" height="1448"
+             alt="Das Team der Praxis René Steffny bei einem gemeinsamen Ausflug">
 
         <h1 class="q">Werde Teil unseres Teams</h1>
         <p class="q-hint">Physiotherapie, Osteopathie und Naturheilkunde – an drei Standorten in der Städteregion Aachen.</p>
 
         <p class="sec-title">Was dich bei uns erwartet</p>
         <ul class="perks" id="perks"></ul>
+
+        <img class="shot shot-wide" src="training.jpg" width="1086" height="1448" loading="lazy"
+             alt="Ein Kollege betreut eine Patientin an der Beinpresse auf unserer Trainingsfläche">
+        <p class="caption">Unsere Trainingsfläche – moderne Geräte, echte Betreuung.</p>
 
         <div class="stat">
           <div class="stat-num"><b>2</b><small>in 30 Jahren</small></div>
@@ -785,41 +809,6 @@ const ART = {
   )
 };
 
-/* Team-Illustration für die Startseite */
-const ART_TEAM = A(
-  '<defs>' +
-    '<linearGradient id="tm-mitte" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#41655F"/><stop offset="1" stop-color="#2C4744"/></linearGradient>' +
-    '<linearGradient id="tm-links" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCEEE4"/><stop offset="1" stop-color="#C0DDCD"/></linearGradient>' +
-    '<linearGradient id="tm-rechts" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8CEBB"/><stop offset="1" stop-color="#8FBEA8"/></linearGradient>' +
-  '</defs>' +
-  '<circle cx="100" cy="56" r="47" fill="'+LSG+'" opacity=".32"/>' +
-  '<ellipse cx="100" cy="104" rx="62" ry="6" fill="'+OUT+'" opacity=".08"/>' +
-
-  /* linke Kollegin */
-  '<circle cx="58" cy="58" r="13" fill="'+SKN+'" stroke="'+OUT+'" stroke-width="2.6"/>' +
-  '<path d="M58 45a13 13 0 0 0-12.6 10c2.2-4 6.2-3.4 12.6-3.4S68.4 51 70.6 55A13 13 0 0 0 58 45z" fill="'+OUT+'"/>' +
-  '<path d="M38 100V84q20-14 40 0v16z" fill="url(#tm-links)" stroke="'+OUT+'" stroke-width="2.6" stroke-linejoin="round"/>' +
-
-  /* rechter Kollege */
-  '<circle cx="142" cy="58" r="13" fill="'+SKN+'" stroke="'+OUT+'" stroke-width="2.6"/>' +
-  '<path d="M142 45a13 13 0 0 0-12.6 10c2.2-4 6.2-3.4 12.6-3.4s10.4-.6 12.6 3.4A13 13 0 0 0 142 45z" fill="'+OUT+'"/>' +
-  '<path d="M122 100V84q20-14 40 0v16z" fill="url(#tm-rechts)" stroke="'+OUT+'" stroke-width="2.6" stroke-linejoin="round"/>' +
-
-  /* vorne in der Mitte */
-  '<g class="bob">' +
-    '<circle cx="100" cy="46" r="15" fill="'+SKN+'" stroke="'+OUT+'" stroke-width="2.8"/>' +
-    '<path d="M100 31a15 15 0 0 0-14.6 11.6c2.6-4.6 7.2-3.9 14.6-3.9s12 .7 14.6 3.9A15 15 0 0 0 100 31z" fill="'+OUT+'"/>' +
-    '<path d="M70 100V76q30-16 60 0v24z" fill="url(#tm-mitte)" stroke="'+OUT+'" stroke-width="2.8" stroke-linejoin="round"/>' +
-    '<path d="M92 72l8 7 8-7" fill="none" stroke="'+SGE+'" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</g>' +
-
-  /* Herz und Funkeln */
-  '<path d="M100 20c-4-2.8-7-5.8-7-9a3.7 3.7 0 0 1 7-1.6 3.7 3.7 0 0 1 7 1.6c0 3.2-3 6.2-7 9z" fill="'+CLY+'" stroke="'+OUT+'" stroke-width="2.2" stroke-linejoin="round"/>' +
-  '<path d="M28 40l2.2 5.8 5.8 2.2-5.8 2.2-2.2 5.8-2.2-5.8-5.8-2.2 5.8-2.2z" fill="'+SGE+'"/>' +
-  '<circle cx="172" cy="36" r="3.2" fill="'+SND+'"/>' +
-  '<circle cx="178" cy="72" r="2.4" fill="'+LSG+'"/>'
-);
-
 /* Großes Häkchen für Kontakt- und Danke-Seite */
 const BIG =
   '<svg viewBox="0 0 76 76" aria-hidden="true" style="width:100%;height:100%">' +
@@ -1193,7 +1182,6 @@ $('#backEnd').addEventListener('click', () => show('s-quiz'));
 /* ============================================================
    Startseite aufbauen und ins Quiz überleiten
    ============================================================ */
-$('#introArt').innerHTML = ART_TEAM;
 $('#perks').innerHTML = PERKS.map((p, i) =>
   '<li style="--i:' + i + '">' +
     '<span class="pi">' + (ICONS[p.ico] || ICONS.minus) + '</span>' +
