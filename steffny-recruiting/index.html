@@ -227,7 +227,7 @@ main{ flex:1; }
 }
 .shot-hero{
   aspect-ratio:16/10; object-position:center 46%;
-  margin:0 0 clamp(16px,3vw,22px);
+  margin:clamp(18px,3.5vw,24px) 0 0;
 }
 .shot-wide{
   aspect-ratio:3/2; object-position:center 32%;
@@ -282,6 +282,36 @@ main{ flex:1; }
 .why p{ font-size:14.5px; color:var(--muted); margin:0; line-height:1.6; }
 
 .start-cta{ margin:clamp(22px,4vw,28px) 0 0; }
+.start-cta-top{ margin-top:clamp(16px,3vw,22px); }
+
+/* Kleiner Aufmacher über der Überschrift */
+.eyebrow{
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin:0 0 12px; font-size:12px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--green);
+}
+.blink{
+  width:8px; height:8px; border-radius:50%; background:var(--sage); flex:none;
+  animation:blink 2.4s ease-out infinite;
+}
+@keyframes blink{
+  0%   { box-shadow:0 0 0 0 rgba(143,190,168,.75); }
+  70%  { box-shadow:0 0 0 9px rgba(143,190,168,0); }
+  100% { box-shadow:0 0 0 0 rgba(143,190,168,0); }
+}
+
+/* Der obere Knopf wackelt in Abständen kurz an. Die Bewegung sitzt auf
+   einer Hülle, damit der Hover-Effekt des Knopfes nicht überschrieben wird. */
+.wackel{ display:block; transform-origin:center; animation:wackel 4.2s ease-in-out infinite; }
+.wackel:hover{ animation-play-state:paused; }
+@keyframes wackel{
+  0%, 82%, 100% { transform:rotate(0deg) scale(1); }
+  85% { transform:rotate(-2.4deg) scale(1.025); }
+  88% { transform:rotate(2.4deg)  scale(1.025); }
+  91% { transform:rotate(-1.6deg) scale(1.015); }
+  94% { transform:rotate(1.1deg)  scale(1.008); }
+  97% { transform:rotate(-.5deg)  scale(1); }
+}
 .start-note{
   display:flex; align-items:center; justify-content:center; gap:7px;
   font-size:13px; color:var(--muted); margin:12px 0 0;
@@ -366,10 +396,24 @@ footer a:hover{ color:var(--green); text-decoration:underline; }
     <!-- ============ START: WARUM WIR ============ -->
     <section class="screen is-on" id="s-intro">
       <div class="panel">
+        <p class="eyebrow"><span class="blink"></span>Wir stellen ein</p>
+        <h1 class="q">Wir suchen dich als Physiotherapeut (m/w/d) in Kall</h1>
+
         <img class="shot shot-hero" src="team.jpg" width="1086" height="1448"
              alt="Das Team der Praxis René Steffny bei einem gemeinsamen Ausflug">
 
-        <h1 class="q">Werde Teil unseres Teams</h1>
+        <div class="start-cta start-cta-top">
+          <span class="wackel">
+            <button class="btn btn-wide" type="button" id="startTop">
+              Jetzt bewerben
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </button>
+          </span>
+          <p class="start-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>
+            6 kurze Fragen · ohne Lebenslauf
+          </p>
+        </div>
 
         <p class="sec-title">Was dich bei uns erwartet</p>
         <ul class="perks" id="perks"></ul>
@@ -1188,9 +1232,12 @@ $('#perks').innerHTML = PERKS.map((p, i) =>
   '</li>'
 ).join('');
 
-$('#start').addEventListener('click', () => {
-  show('s-quiz');
-  if (!booted) render();   // beim ersten Start Frage 1 aufbauen
+/* Beide Knöpfe – oben und unten – führen ins Quiz */
+['#startTop', '#start'].forEach(sel => {
+  $(sel).addEventListener('click', () => {
+    show('s-quiz');
+    if (!booted) render();   // beim ersten Start Frage 1 aufbauen
+  });
 });
 </script>
 
